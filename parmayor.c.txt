@@ -1,0 +1,52 @@
+/* Buscar el numero Par mas grande, siguiendo las siguientes reglas.
+- Debe exponerse cuantas veces es divisible
+- El siguiente número a él debe ser impar.
+- La suma del número anterior y posterior, deben de dar el numero que se encuentra posicionado.
+- El resultado de la division entre 2 del numero par analizado deberá ser igual al número siguiente siguiente en el arreglo.
+
+Alumna : Gabriela Rueda Soto
+Fecha: Viernes 10 de marzo, 2017.
+*/
+
+/*-----DECLARACION DE LIBRERIAS------------*/
+#include<time.h>
+#include<stdlib.h>
+#include<stdio.h>
+
+int main(){
+	int i=0;			//Variable indicadora en ciclos
+	int arreglo[1000];	//Arreglo que guardara todos los numeros generados de manera aleatoria 
+	int parmayor=0;		//Variable que indica el numero par mayor final 
+	int mitad=0;		//Variable que ayudara en el conteo de divisiones del par mayor final 
+	int contador=0;		//Variable que se incrementa al dividirse el par mayor final 
+
+	srand(time(NULL)); //Instrucción que inicializa el generador de números aleatorios
+
+	do{				        //CICLO DONDE SE GENERA EL ARREGLO CON NUMEROS RANDOM
+		arreglo[i] = rand() % 100;      //genera numeros random entre 0 y 99 y se asigna a variable random 
+		printf("  \n%d",arreglo[i]);    //imprime todos los numeros generados
+		i++;			        //incremento de variable i, el cual representa el subindice del arreglo
+	}while(i<1000);			        //mientras i sea menor de 1000 se generaran los numeros
+
+	i=0;					// La variable i se le asigna como valor 0, para ser utilizada en el siguiente ciclo do-while
+
+	do{					//CICLO DONDE SE IDENTIFICAN LOS NUMEROS PARES
+		if(arreglo[i]%2==0 && arreglo[i+1]%2==1 && (arreglo[i-1] + arreglo[i+1] == arreglo[i]) && (arreglo[i]/2 == arreglo[i+2]) && arreglo[i]>parmayor ){	//Si el numero es par, y el siguiente es impar entonces y es el resultado de la suma del siguiente y previo numero y si la mitad del numero par equivale al numero siguiente del siguiente, si el numero par es mayor que el par mayor previo, entonces se cumple la siguiente linea
+			parmayor = arreglo[i];		//Se va guardando el par que cumple con las declaraciones previas en la variable parmayor
+		}
+		i++	;				//La variable i se incrementa en 1, la cual controla cuando el ciclo do-while termina
+	}while(i<1000);					//El ciclo termina cuando i equivale a 1000, mientras sea menor que 1000 el ciclo se repite
+
+
+	if(parmayor!=0){			//CICLO QUE IMPRIME EL MAYOR NUMERO PAR ENCONTRADO CON TODOS LOS REQUERIMIENTOS
+		mitad = parmayor;		//La variable mitad toma el valor del par mayor encontrado al final
+		do{						//CICLO QUE ENCUENTRA CUANTAS VECES ES DIVISIBLE EL NUMERO PAR ENTRE 2, DE MANERA QUE EL RESULTADO SIGA SIENDO ENTERO
+			mitad = mitad/2;	//La variable mitad la cual inicia con el valor del par mayor encontrado se va dividiendo entre 2
+			contador++;			//Se van contando cuantas veces se puede dividir el par entre 2
+		}while(mitad%2==0);		//Mientras esa mitad siga siendo par, entonces se puede seguir dividiendo, por lo que el ciclo se repite, hasta que el mitad sea impar
+		printf("\nEl mayor par encontrado es: %d \nEs divisible: %d veces",parmayor,contador);	//Al final se imprime el numero par y cuantas veces es divisible 
+	}
+
+	printf("\n\nFIN DEL PROGRAMA");	//Al final se imprime el FIN DEL PROGRAMA 
+	return 0; 
+}
